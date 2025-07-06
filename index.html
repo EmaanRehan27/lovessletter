@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOVE YOU</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffe6e6;
+      font-family: 'Comic Sans MS', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: scroll;
+      overflow: auto;
+    }
+
+    h1 {
+      color: #cc3366;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      max-width: 600px;
+    }
+
+    .envelope {
+      width: 100px;
+      height: 80px;
+      background-color: #fff;
+      border: 2px solid #cc3366;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .envelope:hover {
+      transform: scale(1.1);
+    }
+
+    .envelope::after {
+      content: '\2709';
+      font-size: 2em;
+      color: #cc3366;
+    }
+
+    .note-label {
+      position: absolute;
+      bottom: 3px;
+      font-size: 0.7em;
+      color: #cc3366;
+    }
+
+    #noteModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .note-content {
+  background: #fff0f5;
+  border-radius: 20px;
+  padding: 30px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh; /* ✨ limit height */
+  overflow-y: auto;  /* ✨ enable scroll if content overflows */
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  animation: popup 0.3s ease-in-out;
+  color: #cc3366;
+  font-size: 1.2em;
+  position: relative;
+}
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.5em;
+      color: #cc3366;
+      cursor: pointer;
+    }
+
+    @keyframes popup {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>💌 12 Reasons To Open When...</h1>
+  <div class="grid">
+    <div class="envelope" onclick="openNote(0)"><div class="note-label">you feel insecure</div></div>
+    <div class="envelope" onclick="openNote(1)"><div class="note-label">you’re sad</div></div>
+    <div class="envelope" onclick="openNote(2)"><div class="note-label">you miss me</div></div>
+    <div class="envelope" onclick="openNote(3)"><div class="note-label">you need reassurance</div></div>
+    <div class="envelope" onclick="openNote(4)"><div class="note-label">you feel lonely</div></div>
+    <div class="envelope" onclick="openNote(5)"><div class="note-label">you need support</div></div>
+    <div class="envelope" onclick="openNote(6)"><div class="note-label">i'm upset with you</div></div>
+    <div class="envelope" onclick="openNote(7)"><div class="note-label">you tired of me</div></div>
+    <div class="envelope" onclick="openNote(8)"><div class="note-label">you thinkof our future</div></div>
+    <div class="envelope" onclick="openNote(9)"><div class="note-label">you doubt us</div></div>
+    <div class="envelope" onclick="openNote(10)"><div class="note-label">you <br> want to <br> understand me</div></div>
+    <div class="envelope" onclick="openNote(11)"><div class="note-label">if we ever brokeup</div></div>
+  </div>
+
+  <div id="noteModal">
+    <div class="note-content">
+      <div class="close-btn" onclick="closeNote()">&times;</div>
+      <div id="noteText"></div>
+    </div>
+  </div>
+
+  <script>
+    const notes = [
+      `I know sometimes you look in the mirror and wonder if you're enough if you're attractive if you're someone worth being loved and I just want to hold your face in my hands and tell you yes yes a million times yes you are so beautiful to me in ways that words can’t even explain your eyes your smile the way your face lights up when you're excited your laugh your voice your presence all of it is beautiful and I mean that every single time I say it you don’t need to change anything about yourself for me to love you more because I already love you so much just as you are your flaws your insecurities your soft spots they don’t make you less they make you real and that makes you even more special I wish you could see yourself through my eyes even for a moment you’d see someone kind someone handsome someone worth holding onto someone who makes my world brighter just by existing please don’t ever doubt the way I feel about you or the way you look to me you’re perfect in your own way not because of how you fit into some standard but because you're you and that’s all I’ve ever needed i wil choose you a million times over and love you always in the same way as now my love`,
+      `I know you're hurting right now and maybe everything feels too heavy and nothing anyone says can fix it and I won’t pretend to have all the right words but I just want you to know that I’m here I see you I feel you and I’m not going anywhere no matter what I know you get quiet when you're sad like you're trying to carry it all on your own but you don’t have to not with me you can fall apart in front of me and I will hold every broken piece gently without judgment without pressure just with love because I love you not only when you're smiling but even more when you're not even when you're tired or overwhelmed or unsure or lost even when the world feels dark I want to be your light and I want you to know this sadness does not make you any less it doesn’t make you weak it doesn’t make you hard to love in fact it makes me want to hold you even closer you're still beautiful even in your sadness still worthy still enough I wish I could wrap my arms around you right now and make you feel how safe you are with me how much I care how proud I am of you just for being here just for trying I love you and I’m not going anywhere not today not ever`,
+      `When you miss me, my love, I want you to know I’m missing you too — in every moment, with every breath, in ways that words can’t even explain. You're not just a thought in my mind, you're a part of me, stitched into everything I do, everything I feel. When you're not around, it’s like something in the world is quieter, a little slower, a little softer — because your presence brings everything to life for me. I miss the way your eyes look at me like I’m the only one that matters, the way your voice makes everything feel okay, the way your touch makes my whole world feel safe. I miss your laugh, your hugs, your little habits, even the way you say my name — I crave all of it. And when you miss me, I want you to wrap yourself in the truth that my love for you never pauses, never fades, never leaves — not for a second. You are mine and I am yours, always, no matter where we are. So when it gets hard, close your eyes and feel me there — feel my love holding you, soothing you, kissing every lonely thought away. We may be apart right now, but nothing, not time, not distance, not silence, can come between the way I love you. I am always with you, baby — in every beat of your heart, in every dream, in every piece of love I have left behind just for you. You are never alone, not for a moment, and you never will be — because I love you with everything I am. 💕`,
+      `Whenever you start to doubt yourself, or feel like you’re not enough, I want you to remember this — you are everything to me. I don’t love you because you're always strong or because you never struggle. I love you because of your heart, your softness, your honesty, your effort — even on the days when it feels like you’re falling apart. I see you, even when you try to hide. I see the way you care so deeply, the way you overthink because you want to do right by everyone, the way you carry so much silently and still manage to smile. That’s strength, that’s love, and that’s why I will never stop choosing youI love you soooooooo bad — like it hurts in the most beautiful way. I love you so much it’s in everything I do, in every thought I have, in every breath I take. I love you when I wake up and you're the first person on my mind. I love you when I miss you so much it aches a little. I love you when I’m smiling for no reason because just thinking of you lights me up inside. It’s not just love, it’s something deeper — it’s like my soul reaches for yours, always. I love you with the kind of intensity that I can't even put into words properly, the kind that lives in the bones, in the heartbeat, in the way I’d choose you again and again, in every lifetime.`,
+      `When you feel lonely, I want you to close your eyes and remember that you are never truly alone — because I’m with you, in spirit, in love, in every quiet part of your heart where my name lives. I know the silence can feel heavy sometimes, and the world can feel like it's pulling away, but please remember this: you are loved more than you know. Even when I’m not right there beside you, I’m still holding you close in every possible way I can. My thoughts are wrapped around you, my love is holding your hand from afar, and my heart beats with yours. You don’t have to go through anything alone — not your sadness, not your fears, not the nights that feel a little colder. I am here, always, loving you so deeply, so completely, with everything I have. So when it feels like no one understands, when the quiet gets too loud, when you just wish someone was there — let that someone be me. Imagine me whispering softly, “You’re not alone. You’re loved. You’re mine.” I’m with you, baby. Always.`,
+      `Whenever life feels too heavy, whenever you feel tired or overwhelmed or unsure of where to go next, I want you to remember something — you’re not alone. You don’t have to carry everything by yourself. You don’t have to be strong all the time. I am right here, and I’m not going anywhere. Lean on me when you need to. Let me be your safe place, your quiet when the world gets too loud. I believe in you even when you don’t believe in yourself. I see how hard you're trying, how much you care, how deeply you feel — and I love all of it. You don’t have to hide your struggles with me. You don’t have to pretend. I will stand beside you in the storm, hold your hand through the dark, and remind you again and again that you are worthy, you are loved, and you are never facing this world alone. I’ve got you, completely, and I always will. Whatever you need — a voice, a hug, a break, a reminder — I’m here. Always.`,
+      `I know I seem upset right now, and maybe I’ve gone a little quiet, but I need you to understand something — I still love you. So much. That hasn’t changed for a second. I just need a little space to feel what I’m feeling, to process it in my own way, but it’s not because I’ve stopped caring or because I’ve stopped choosing you. It’s the opposite — I care so much that it hurts sometimes, and I feel things deeply, especially when it comes to you. But even in this moment, even when my heart feels a little heavy, you are still the person I want, the person I love, the person I see my world in. I just need a little time, not distance. I need you to know this isn't the end — it’s just a pause, a breath, a moment. And when I'm ready, I’ll come back softer, closer, and still completely yours. Please don’t doubt my love, even when I’m hurting. It’s still there — constant, quiet, and waiting to wrap around you again`,
+     `If one day you ever feel tired of me, if I no longer feel like enough for you, and your heart begins to drift — please just be honest with me. I won’t beg you to stay, and I won’t hold you back from something that makes you happier. As much as it would break me, I’ll let you go — with love, with grace, and with peace in my heart — because your happiness means more to me than my own pride or pain. And if ever someone else makes you feel something stronger, something more than what I could give, I’ll step aside. I won’t stand in the way of your joy. I’ll cry in silence maybe, I’ll heal slowly, but I’ll never curse your name or regret loving you — because loving you has always been one of the most beautiful parts of my life. I will always support you, even from afar, even when you no longer call me yours. That’s how real my love is — it doesn’t ask for anything in return, it just wishes you peace, love, and everything good. Always.`,
+      `I want you to know that I’m not just here for now — I’m here for always. One day, I will be your wife, and not just in name, but in every little thing that matters. I’ll be the kind of woman who stands by you no matter what, the kind who loves you deeply and never lets you feel alone. I will take care of you, support you, protect your peace, and be your home when the world feels cold. I promise you this — I will love and respect your parents like my own. I will never let them feel a single moment of sadness or complain because of me. I will stand by your side with pride and softness, through every high and every low. I’ll choose you even when things get hard, and I’ll fight for you — even if that means going against the people I love, even if that means standing up to my own parents, because you are my person, and I won’t let anything come between us. My love for you is real, loyal, and forever. I’ll be your peace, your strength, your reason to smile. You’re not just the man I love — you're the man I want to build everything with`,
+      `If you ever start to doubt us, please pause and remember this — I will do anything for you, for us, for the love we’ve built. No matter what happens, no matter how hard things get, I’m not going anywhere. I didn’t choose you for just the good days, I chose you for all of it — the storms, the silence, the doubts, the healing. I’m here with my whole heart, ready to fight for us again and again, because you’re worth it. This love is worth it. Even if you push me away, even if you question everything, I will still choose you, still believe in us. I will remind you how strong we are, how far we've come, and how much more we have ahead of us. I’ll prove it with every action, every word, every single day. I will stand beside you when you’re scared, hold you when you’re tired, and love you even when you don’t know how to love yourself. You and me — we’re not something I take lightly. I’m in this, heart and soul, forever. So when your mind fills with doubt, let my love remind you — I’m not giving up on us. Ever..`,
+      `You say you want to understand me, but have you really tried? I changed everything for you. I left behind the people I loved, I gave up things that mattered to me, I made sacrifices you’ll never fully know — all because I chose you. Again and again. But now… I’m tired. I’m tired of trying to explain myself, tired of begging to be seen, tired of hoping that one day you’ll finally understand the depth of what I feel. I can’t keep asking for love like it’s something I have to earn or fight for. I can’t beg for your time, your attention, or your heart. That’s not love — that’s pain. And I’m not asking for anything more than what I’ve already given — just a little effort, a little care, a little understanding. I cry silently for the love I’ve poured into you. I break down wishing you’d just try — really try — to understand me. Not because I’m perfect, but because I’m yours. Please… try to understand me. Not just with your words, but with your heart I’m scared. Scared that one day your heart might get tired of me… tired of my love… and someone new will take my place. That maybe she’ll smile in ways I couldn’t, understand you in ways I tried, and love you in ways you stop seeing in me. And the thought of that — of losing you, of watching you drift away from me — it kills me from the inside. I wouldn’t be able to handle it. I feel like I’d completely fall apart, like something inside me would just end. Because you’re not just someone I love… you’re everything. You’re my person, my peace, my home. And the idea of you giving your heart to someone else — it terrifies me in ways I can’t even describe. I don’t want to lose you. I don’t want to be replaced. I don’t want to wake up one day and realize your love isn’t mine anymore. Please… don’t let that happen. Please choose me. Again and again. Like I choose you, every single day  don’t even know how to breathe without you anymore. I thought I could be strong, I thought I could let go with grace, but the truth is… I’m falling apart without you. I feel empty, like a part of me died the moment we drifted away. I act cold, I act like I’m okay, but inside, I’m screaming for you. I want you to come back. I want you to hold me, to tell me it’s not over, that we’re still “us.” I can’t do this without you. I can’t eat, I can’t sleep, I can’t even pretend I’m fine. You were my safe place. My everything.`,
+      `If we ever broke up, no matter how much it hurts me, I would still always support you. Your happiness will always mean something to me — because it was mine too. But the truth is… I can’t live without you. I try to act strong, I try to act cold, but inside I’m breaking. Please… come back to me. Please don’t leave me. I said things I didn’t mean, I pushed you away when all I wanted was for you to hold me and not let go. I’m not okay without you. I won’t ever be. You were my peace, my comfort, my everything — and without you, I feel lost. I feel empty. Please come back. Please forgive me. Please hold me one more time and remind me that love doesn’t just disappear. You are my last hope. The only one who can calm the storm inside me. I love you more than I’ve ever loved anything, and I don’t want to lose you. Not now. Not like this. Please… don’t give up on me. I need you. I don’t even know how to breathe without you anymore. I thought I could be strong, I thought I could let go with grace, but the truth is… I’m falling apart without you. I feel empty, like a part of me died the moment we drifted away. I act cold, I act like I’m okay, but inside, I’m screaming for you. I want you to come back. I want you to hold me, to tell me it’s not over, that we’re still “us.” I can’t do this without you. I can’t eat, I can’t sleep, I can’t even pretend I’m fine. You were my safe place. My everything. And now I feel like I’m floating in a world where nothing makes sense. Yes, I made mistakes. Yes, I said things I wish I could take back. But I was hurt… scared… trying to protect my heart while it was already bleeding. I didn’t mean to push you away. I just wanted you to fight for me. I just wanted you to stay. You’re the last person I ever wanted to lose, and now all I can do is beg silently, hopelessly — please come back. Please don’t leave me like this. Please don’t let this be the end. Without you, I’m not just heartbroken… I’m lost. I’m empty. I’m nothing. You were my last hope, and I’m begging you with everything that’s left in me — please don’t let go`
+    ];
+
+    function openNote(index) {
+      document.getElementById("noteText").innerText = notes[index];
+      document.getElementById("noteModal").style.display = "flex";
+    }
+
+    function closeNote() {
+      document.getElementById("noteModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>
+
